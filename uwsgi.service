@@ -1,0 +1,14 @@
+[Unit]
+Description=uWSGI Service
+After=network.target
+
+[Service]
+User=pi
+Group=www-data
+WorkingDirectory=/home/pi/myserver
+Environment="PATH=/home/pi/myserver/bin"
+ExecStart=/home/pi/myserver/bin/uwsgi --ini uwsgi.ini
+
+[Install]
+WantedBy=multi-user.target
+
