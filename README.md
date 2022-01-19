@@ -17,40 +17,39 @@ Tecnologias utilizadas:
     https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
 
 ### Passo 1: Preparar a Raspberry, atualizando o Linux
-  +  sudo apt-get update 
-  +  sudo apt-get upgrade
+	sudo apt-get update 
+	sudo apt-get upgrade
   
 ### Passo 2: Instalar os software necessários
-  +  sudo apt-get install nginx
-  +  sudo apt-get install python3-pip
-  +  sudo apt-get install build-essential python3-dev libssl-dev libffi-dev python3-setuptools
-  +  sudo pip3 install flask uwsgi
+	sudo apt-get install nginx
+	sudo apt-get install python3-pip
+	sudo apt-get install build-essential python3-dev libssl-dev libffi-dev python3-setuptools
+	sudo pip3 install flask uwsgi
 
 ### Passo 3: Criar o app Flask
-  Criar uma pasta no diretório home:
-  +  cd ~
-  +  mkdir myserver
+	Criar uma pasta no diretório home:
+	cd ~
+	mkdir myserver
   
-  Alterar a propriedade owner da pasta:
-  +  sudo chown www-data:www-data /home/pi/myserver
+	Alterar a propriedade owner da pasta:
+	sudo chown www-data:www-data /home/pi/myserver
   
-  Entrar na pasta:
-  +  cd myserver
+	Entrar na pasta:
+	cd myserver
 
-  Criar arquivo rasp.py:
-  +  sudo nano rasp.py
+	Criar arquivo rasp.py:
+	sudo nano rasp.py
 
-  Copiar o texto abaixo para o arquivo criado e salvar:
-  
-      from flask import Flask
-      app = Flask(__name__)
+	Copiar o texto abaixo para o arquivo e salvar:
+	from flask import Flask
+ 	app = Flask(__name__)
 
-      @app.route("/")
-      def index():
+ 	@app.route("/")
+	def index():
 	    return "<h3>Hello World</h3>"
 
-      if __name__ == "__main__":
-	      app.run(host='0.0.0.0')
+	if __name__ == "__main__":
+	    app.run(host='0.0.0.0')
 
   ### Passo 4: Testar o app
     Antes de executar o teste, verificar o ip da Raspberry, digitando o comando:
@@ -62,13 +61,31 @@ Tecnologias utilizadas:
     A página default do Nginx deverá aparecer.
     
     Executar um teste para verificar se o serviço uWSGI funciona corretamente:
-    +  sudo uwsgi --socket 0.0.0.0.0:8000 --protocol=http -w rasp:app
+      sudo uwsgi --socket 0.0.0.0.0:8000 --protocol=http -w rasp:app
     
     Voltar ao navegador e acrescentar a porta:
     http://192.168.101.112:8000
      
     Após o teste, retornar ao terminal e encerrar o serviço uWSGI digitando ctrl+c.
     
-  ### Passo 5: 
+  ### Passo 5: Criar um arquivo de inicialização para o serviço uWSGI
+      sudo nano uwsgi.ini
+    
+    Copiar o texto abaixo para o arquivo e salvar:
+    	
+	[uwsgi]
+	module = rasp:app
+
+	master = true
+	processes = 1x
+	threades = 2
+
+	socket = myserver.sock
+	chmod-socket = 664
+	vacuum = true
+	
+	die-on-term = true
+
+
     
     
