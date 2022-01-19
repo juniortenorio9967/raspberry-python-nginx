@@ -1,6 +1,6 @@
 ## Web Server em Raspberry Pi, com Python/Flask e Nginx
 
-### Sequência de passos para implementar um servidor Web em uma placa Raspberry Pi, com Nginx Web Server Open Source e aplicação em Python/Flask.
+### Sequência de passos para implementar um servidor Web em uma placa Raspberry Pi, com Nginx e aplicação em Python/Flask.
 
 Tecnologias utilizadas:
 
@@ -17,9 +17,9 @@ Tecnologias utilizadas:
     https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
     
 Fontes pesquisadas:
-    https://singleboardbytes.com
-    https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04
-    https://stackoverflow.com/questions/61354262/nginx-server-running-flask-on-raspberry-pi
++  https://singleboardbytes.com
++  https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04
++  https://stackoverflow.com/questions/61354262/nginx-server-running-flask-on-raspberry-pi
 
 
 ### Passo 1: Preparar a Raspberry, atualizando o Linux
