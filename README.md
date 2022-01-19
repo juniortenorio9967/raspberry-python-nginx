@@ -15,6 +15,12 @@ Tecnologias utilizadas:
     
 - uWSGI - Serviço que permite a conexão entre a aplicação e o web server Nginx
     https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
+    
+Fontes pesquisadas:
+    https://singleboardbytes.com
+    https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04
+    https://stackoverflow.com/questions/61354262/nginx-server-running-flask-on-raspberry-pi
+
 
 ### Passo 1: Preparar a Raspberry, atualizando o Linux
 	sudo apt-get update 
@@ -24,7 +30,7 @@ Tecnologias utilizadas:
 	sudo apt-get install nginx
 	sudo apt-get install python3-pip
 	sudo apt-get install build-essential python3-dev libssl-dev libffi-dev python3-setuptools
-	sudo pip3 install flask uwsgi
+	sudo pip3 install flask uwsgi wheel
 
 ### Passo 3: Criar o app Flask
 	Criar uma pasta no diretório home:
@@ -56,7 +62,7 @@ Tecnologias utilizadas:
     ifconfig
     
     Digitar no navegador web o endereço ip identificado acima, por exemplo:
-    http://192.168.101.112
+    http://192.168.101.112 (Você deverá informar seu IP)
     
     A página default do Nginx deverá aparecer.
     
@@ -64,7 +70,7 @@ Tecnologias utilizadas:
       sudo uwsgi --socket 0.0.0.0.0:8000 --protocol=http -w rasp:app
     
     Voltar ao navegador e acrescentar a porta:
-    http://192.168.101.112:8000
+    http://(seu IP):8000
      
     Após o teste, retornar ao terminal e encerrar o serviço uWSGI digitando ctrl+c.
     
@@ -131,7 +137,7 @@ Tecnologias utilizadas:
   
   	sudo systemctl restart nginx
 	
-	Após reiniciar, o endereço http://192.168.101.112 irá responder com "502 Bad Gateway". O Nginx está tentando
+	Após reiniciar, o endereço http://(seu IP) irá responder com "502 Bad Gateway". O Nginx está tentando
 	repassar as requisições do navegador para o uWSGI, que nesse momento não está rodando, gerando o erro.
 
   ### Passo 9: Rodar o uWSGI sempre que a Raspberry iniciar
@@ -174,3 +180,10 @@ Tecnologias utilizadas:
 	
 	O status será apresentado, onde a linha mais importante é a que informa "Active: active (running)", indicando que
 	o serviço está rodando OK!
+	
+  ###  Passo 10: Reiniciar e testar
+  
+  	sudo reboot
+	
+	Após reiniciar a Raspberry, acessar o endereço http://(seu IP), e a página web "Hello World" deverá se apresentar.
+	
