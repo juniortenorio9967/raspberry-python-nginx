@@ -7,7 +7,7 @@ Tecnologias utilizadas:
 - Raspberry Pi 4 - 4GB RAM, Microprocessador ARM, Sistema Operacional Raspbian Linux-Debian based
     https://www.raspberrypi.com/products/raspberry-pi-4-model-b/specifications/
     
-- Nginx Web Server - A empresa Nginx possui uma gama de produtos, entre eles o poderoso Nginx Web Server, portável para Raspberry Pi 4
+- Nginx Web Server - A empresa Nginx dispõe de vários produtos, entre eles o Nginx Web Server
     https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
     
 - Python/Flask - Flask é um micro framework de aplicações Web baseado na linguagem Python
