@@ -14,8 +14,10 @@ Tecnologias utilizadas:
     https://en.wikipedia.org/wiki/Flask_(web_framework)
     
 - uWSGI - Serviço que permite a conexão entre a aplicação e o web server Nginx
+
     https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
-    
+
+
 Fontes pesquisadas:
 +  https://singleboardbytes.com
 +  https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04
@@ -38,7 +40,7 @@ Fontes pesquisadas:
 	mkdir myserver
   
 	Alterar a propriedade owner da pasta:
-	sudo chown www-data:www-data /home/pi/myserver
+	sudo chown www-data /home/pi/myserver
   
 	Entrar na pasta:
 	cd myserver
