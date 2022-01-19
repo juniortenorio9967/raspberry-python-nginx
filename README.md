@@ -126,5 +126,51 @@ Tecnologias utilizadas:
 	Para finalizar, criar atalho (simlink) na pasta "sites-enable" para o arquivo criado:
 	sudo ln -s /etc/nginx/sites-available/myserver_proxy /etc/nginx/sites-enabled
 
+
+  ### Passo 8: Reiniciar o Nginx
+  
+  	sudo systemctl restart nginx
+	
+	Após reiniciar, o endereço http://192.168.101.112 irá responder com "502 Bad Gateway". O Nginx está tentando
+	repassar as requisições do navegador para o uWSGI, que nesse momento não está rodando, gerando o erro.
+
+  ### Passo 9: Rodar o uWSGI sempre que a Raspberry iniciar
+  
+  	Para possibilitar que o uWSGI inicie junto com Linux, utilizamos o serviço "systemd". Vamos entrar no
+	diretório:
+	cd /etc/systemd/system
+	
+	criar o arquivo de serviço para o uWSGI:
+	sudo nano uwsgi.service
+	
+	Copiar o código abaixo para o arquivo criado e salvar:
+	
+	[Unit]
+	Description=uWSGI Service
+	After=network.target
+	
+	[Service]
+	User=pi
+	Group=www-data
+	WorkingDirectory=/home/pi/myserver
+	Environment="PATH=/home/pi/myserver/bin"
+	ExecStart=/home/pi/myserver/bin/uwsgi --ini uwsgi.ini
+	
+	[Install]
+	WantedBy=multi-user.target
     
     
+	Para que o systemd através de seu daemon capture o novo arquivo e o execute, precisamos reinicializar o daemon:
+	sudo systemctl daemon-reload
+	
+	Podemos startar o serviço manualmente agora...
+	sudo systemctl start uwsgi.service
+	
+	...e para que da próxima vez que a Raspberry iniciar, o serviço uWSGI suba junto:
+	sudo systemctl enable uwsgi.service
+	
+	Para finalizar, testamos o status do serviço:
+	sudo systemctl status uwsgi.service
+	
+	O status será apresentado, onde a linha mais importante é a que informa "Active: active (running)", indicando que
+	o serviço está rodando OK!
