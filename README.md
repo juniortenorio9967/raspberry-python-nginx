@@ -86,6 +86,45 @@ Tecnologias utilizadas:
 	
 	die-on-term = true
 
+  ### Passo 6: Testar o arquivo de inicialização uWSGI
+  	sudo uwsgi --ini uwsgi.ini
+	
+	Abrir uma nova janela de terminal, digitar o comando abaixo para visualizar os arquivos
+	da pasta myserver. Dentre eles deverá estar presente o arquivo myserver.sock. Este arquivo aparece somente
+	quando o serviço uWSGI está rodando, daí a necessidade de abrir outro terminal, pois o primeiro estará rodando
+	o serviço.
+	
+	cd ~/myserver
+	ls
+	
+	Nesse momento, o uWSGI não está utilizando nenhuma porta, apenas o Nginx está respondendo na porta padrão.
+	Para encerrar o serviço uWSGI, digitar ctrl+c.
+	
+  ### Passo 7: Configurar o Nginx para utilizar o serviço uWSGI
+  	
+	Agora o Nginx será configurado para direcionar todo o tráfego para o serviço uWSGI. Esse recurso do
+	Nginx é conhecido como "Proxy Reverso".
+	
+	Primeiro, excluir o arquivo default do Nginx:
+	sudo rm /etc/nginx/sites-enabled/default
+	
+	Em seguida, criar um novo arquivo:
+	sudo nano /etc/nginx/sites-available/myserver_proxy
+	
+	Copiar o código abaixo para o arquivo e salvar:
+	
+	server {
+	listen 80;
+	server_name localhost;
+	
+	location / {
+	include uwsgi_params;
+	uwsgi_pass unix:/home/pi/myserver/myserver.sock;
+	  }
+	}
+	
+	Para finalizar, criar atalho (simlink) na pasta "sites-enable" para o arquivo criado:
+	sudo ln -s /etc/nginx/sites-available/myserver_proxy /etc/nginx/sites-enabled
 
     
     
